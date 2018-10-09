@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/clientTrials.dir/main.cpp.o CMakeFiles/clientTrials.dir/TCPClient.cpp.o CMakeFiles/clientTrials.dir/jsonBuilder.cpp.o  -o clientTrials 

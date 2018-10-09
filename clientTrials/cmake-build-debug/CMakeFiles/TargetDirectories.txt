@@ -1,0 +1,3 @@
+/home/gustavo/Escritorio/Google Drive Ubuntu/TEC/Cursos/Algoritmos y estructuras de datos 2/Proyectos/Proyecto 1/MPointer_Client/clientTrials/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/gustavo/Escritorio/Google Drive Ubuntu/TEC/Cursos/Algoritmos y estructuras de datos 2/Proyectos/Proyecto 1/MPointer_Client/clientTrials/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/gustavo/Escritorio/Google Drive Ubuntu/TEC/Cursos/Algoritmos y estructuras de datos 2/Proyectos/Proyecto 1/MPointer_Client/clientTrials/cmake-build-debug/CMakeFiles/clientTrials.dir

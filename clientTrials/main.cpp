@@ -1,50 +1,50 @@
 #include <iostream>
 #include "TCPClient.h"
 #include "jsonBuilder.h"
+#include <stdio.h>
+#include <sys/socket.h>
+#include <stdlib.h>
+#include <netinet/in.h>
+#include <string.h>
+#define PORT 8080
 
 int main() {
 
-  jsonBuilder jsb = jsonBuilder();
-
-  json js1 = jsb.addMPointerValue(368,3);
-  std::string js1S = js1.dump();
-  std::cout<< js1S << std::endl;
-
-  json js2 = jsb.copyMPointer(32,12);
-  std::string js2S = js2.dump();
-  std::cout<< js2S << std::endl;
-
-  json js3 = jsb.createMPointer("integer");
-  std::string js3S = js3.dump();
-  std::cout<< js3S << std::endl;
-
-  json js4 = jsb.deleteMPointer(15);
-  std::string js4S = js4.dump();
-  std::cout<< js4S << std::endl;
-
-  json js5 = jsb.sortMPointerDir("bogosort");
-  std::string js5S = js5.dump();
-  std::cout<< js5S << std::endl;
-
-  json js6 = jsb.startGCThread();
-  std::string js6S = js6.dump();
-  std::cout<< js6S << std::endl;
-
-
-    //---TCPCLIENT----
-
-    TCPClient tcpc = TCPClient();
-
-    tcpc.setup("127.0.0.1",1234);
-    tcpc.Send(js2S);
-
-    string response = tcpc.receive();
-
-    if(response != ""){
-        std::cout << "server response...:"<< response << std::endl;
+    struct sockaddr_in address;
+    int sock = 0, valread;
+    struct sockaddr_in serv_addr;
+    char *hello = "MPointer<int> myPtr = MPointer<int>::New()";
+    //char *hello = "MPointer<std::string> myPtr = MPointer<std::string>::New()";
+    //char *hello = "MPointer<char> myPtr = MPointer<char>::New()";
+    //char *hello = "MPointer<double> myPtr = MPointer<double>::New()";
+    //char *hello = "MPointer<float> myPtr = MPointer<float>::New()";
+    char buffer[1024] = {0};
+    if ((sock = socket(AF_INET, SOCK_STREAM, 0)) < 0)
+    {
+        printf("\n Socket creation error \n");
+        return -1;
     }
 
-    std::cout << "...Client trial over..." << std::endl;
+    memset(&serv_addr, '0', sizeof(serv_addr));
 
+    serv_addr.sin_family = AF_INET;
+    serv_addr.sin_port = htons(PORT);
+
+    // Convert IPv4 and IPv6 addresses from text to binary form
+    if(inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr)<=0)
+    {
+        printf("\nInvalid address/ Address not supported \n");
+        return -1;
+    }
+
+    if (connect(sock, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0)
+    {
+        printf("\nConnection Failed \n");
+        return -1;
+    }
+    send(sock , hello , strlen(hello) , 0 );
+    std::cout << "Message: " << hello << " sent" << std::endl;
+    valread = read( sock , buffer, 1024);
+    printf("%s\n",buffer );
     return 0;
 }
